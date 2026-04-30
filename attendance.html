@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+        }
+
+        .box {
+            background: white;
+            width: 350px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        input {
+            display: block;
+            width: 90%;
+            padding: 8px;
+            margin: 8px auto;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .output {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 60px;
+        }
+        textarea {
+    width: 90%;
+    height: 80px;
+    margin: 8px auto;
+    display: block;
+    padding: 8px;
+}
+table {
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- ✅ Header only once -->
+    <div class="header">
+        <img src="logo.png" class="logo">
+        <h3>Erode Sengunthar Engineering College</h3>
+    </div>
+
+    <h2>Attendance Tracker</h2>
+
+    <!-- ✅ Inputs with ID -->
+    <input type="text" id="staff" placeholder="Staff Name">
+    <input type="date" id="date">
+    <input type="text" id="period" placeholder="Period">
+    <input type="number" id="total" placeholder="Total Students">
+    <input type="number" id="present" placeholder="Present Students">
+<textarea id="names" placeholder="Enter student names (comma separated)"></textarea>
+<input type="text" id="studentName" placeholder="Enter Student Name">
+<button onclick="addStudent()">Add Student</button>
+
+<div id="studentList"></div>   
+<!-- ✅ Button -->
+    <button onclick="showData()">Submit</button>
+<input type="text" id="roll" placeholder="Roll Number">
+<input type="text" id="studentName" placeholder="Student Name">
+<button onclick="addStudent()">Add Student</button>
+
+<table border="1" width="100%" id="table">
+    <thead>
+        <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Present</th>
+        </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+    <!-- ✅ Output -->
+    <div class="output" id="result"></div>
+
+</div>
+
+<script>
+function showData() {
+    let s = document.getElementById("staff").value;
+    let d = document.getElementById("date").value;
+    let p = document.getElementById("period").value;
+    let t = document.getElementById("total").value;
+    let pr = document.getElementById("present").value;
+let names = document.getElementById("names").value;
+let nameList = names.split(",");
+    if(t == "" || t == 0){
+        alert("Enter valid total students!");
+        return;
+    }
+
+    <script>
+let students = [];
+
+function addStudent() {
+    let roll = document.getElementById("roll").value;
+    let name = document.getElementById("studentName").value;
+
+    if(roll == "" || name == "") return;
+
+    students.push({roll: roll, name: name, present: false});
+
+    document.getElementById("roll").value = "";
+    document.getElementById("studentName").value = "";
+
+    displayTable();
+}
+
+function displayTable() {
+    let data = "";
+
+    students.forEach((s, index) => {
+        data += `
+        <tr>
+            <td>${s.roll}</td>
+            <td>${s.name}</td>
+            <td>
+                <input type="checkbox" onchange="markPresent(${index})">
+            </td>
+        </tr>`;
+    });
+
+    document.getElementById("tbody").innerHTML = data;
+}
+
+function markPresent(i) {
+    students[i].present = !students[i].present;
+}
+
+function showData() {
+    let total = students.length;
+    let present = students.filter(s => s.present).length;
+
+    if(total == 0){
+        alert("Add students first!");
+        return;
+    }
+
+    let percent = (present / total) * 100;
+    let color = percent < 75 ? "red" : "green";
+
+    document.getElementById("result").innerHTML = `
+        <p><b>Total Students:</b> ${total}</p>
+        <p><b>Present:</b> ${present}</p>
+        <p><b style="color:${color};">Attendance: ${percent.toFixed(2)}%</b></p>
+    `;
+}
+</script>
+
+</body>
+</html>
